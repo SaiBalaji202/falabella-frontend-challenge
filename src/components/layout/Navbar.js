@@ -7,18 +7,23 @@ import { logout } from '../../actions/auth';
 
 import './Navbar.css';
 
-const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
-  const authLinks = (
+const NavBar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+  const adminOnlyLinks = (
     <ul>
       <li>
-        <Link to='/profile'>Developers</Link>
+        <Link to='/notify-subscribers'>Send Notification</Link>
       </li>
       <li>
-        <Link to='/dashboard'>
-          <i className='fas fa-user'></i>{' '}
-          <span className='hide-sm'>Dashboard</span>
-        </Link>
+        <a onClick={logout} href='?#'>
+          <i className='fas fa-sign-out-alt'></i>{' '}
+          <span className='hide-sm'>Logout</span>
+        </a>
       </li>
+    </ul>
+  );
+
+  const authLinks = (
+    <ul>
       <li>
         <a onClick={logout} href='?#'>
           <i className='fas fa-sign-out-alt'></i>{' '}
@@ -30,9 +35,6 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <li>
-        <Link to='/subscribe'>Subscribe</Link>
-      </li>
       <li>
         <Link to='/register'>Register</Link>
       </li>
@@ -50,7 +52,12 @@ const NavBar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </h1>
 
-      {!loading && (isAuthenticated ? authLinks : guestLinks)}
+      {!loading &&
+        (user?.isAdmin
+          ? adminOnlyLinks
+          : isAuthenticated
+          ? authLinks
+          : guestLinks)}
     </nav>
   );
 };

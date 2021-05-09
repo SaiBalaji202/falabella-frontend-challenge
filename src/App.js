@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import Routes from './components/routing/Routes';
 
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
 
 import './App.css';
+
+import { Switch, Redirect } from 'react-router-dom';
+import AdminRoute from './components/routing/AdminRoute';
+
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
+import Alert from './components/layout/Alert';
+import Landing from './components/layout/Landing';
+import NotifySubscribers from './components/admin/NotifySubscribers';
 
 function App() {
   useEffect(() => {
@@ -19,7 +27,17 @@ function App() {
       <Router>
         <>
           <Navbar />
-          <Route component={Routes} />
+          <Alert />
+          <Switch>
+            <Route path='/login' component={Login} />
+            <Route path='/register' component={Register} />
+            <AdminRoute
+              path='/notify-subscribers'
+              component={NotifySubscribers}
+            />
+            <Route path='/' exact component={Landing} />
+            <Redirect to='/'></Redirect>
+          </Switch>
         </>
       </Router>
     </Provider>
