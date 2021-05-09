@@ -1,0 +1,17 @@
+.navbar {
+  display: block;
+  text-align: center;
+}
+
+.navbar ul {
+  text-align: center;
+  justify-content: center;
+}
+
+.navbar h1 {
+  margin-bottom: 1rem;
+}
+
+.navbar .welcome {
+  display: none;
+}
