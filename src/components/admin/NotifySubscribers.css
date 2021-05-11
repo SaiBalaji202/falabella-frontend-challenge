@@ -1,0 +1,30 @@
+.notify-form {
+  max-width: 80vw;
+  margin: auto;
+  margin-bottom: 1rem;
+
+  border: 1px solid #ccc;
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.notify-form .form-group {
+  margin-bottom: 2rem;
+}
+
+.notify-form label {
+  text-align: left;
+  font-weight: 500;
+}
+
+.notify-form input {
+  width: 100%;
+}
+
+.editorClassName {
+  border: 1px solid red;
+}
+
+.toolbarClassName {
+    border: 1px solid red;
+}

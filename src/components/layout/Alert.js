@@ -11,7 +11,7 @@ function Alert({ alerts }) {
         {alerts.map((alert) => (
           <li
             key={alert.id}
-            className={`${styles.alert} ${styles.alert + alert.alertType}`}
+            className={`${styles.alert} ${styles['alert-' + alert.alertType]}`}
           >
             {alert.message}
           </li>

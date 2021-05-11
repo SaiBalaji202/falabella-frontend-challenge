@@ -12,24 +12,23 @@
   justify-content: center;
 }
 
-.navbar ul li {
+.navbar li {
   display: inline-block;
-  padding: 6px;
-  border-radius: 2px;
   font-size: 1.8rem;
+}
+
+.navbar li a {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
   transition: all 0.25s;
 }
 
-.navbar ul li:hover {
+.navbar li a.active {
   color: var(--primary-color);
   background-color: var(--light-color);
 }
 
-.navbar ul li:hover a {
-  color: var(--primary-color);
-}
-
-.navbar ul li:not(:last-child) {
+.navbar li:not(:last-child) {
   margin-right: 1.8rem;
 }
 

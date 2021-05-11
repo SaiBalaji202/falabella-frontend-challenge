@@ -1,0 +1,13 @@
+.landing-form {
+  max-width: 40rem;
+  margin: auto;
+
+  border: 1px solid #ccc;
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.landing-form input,
+.landing-form button[type='submit'] {
+  width: 100%;
+}

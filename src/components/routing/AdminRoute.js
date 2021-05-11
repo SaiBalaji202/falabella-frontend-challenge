@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 import { connect } from 'react-redux';
 
 const AdminRoute = ({
@@ -13,6 +14,7 @@ const AdminRoute = ({
     {...rest}
     render={(props) => {
       if (loading) {
+        <Spinner />;
         return;
       }
       if (!isAuthenticated || !user?.isAdmin) return <Redirect to='/' />;

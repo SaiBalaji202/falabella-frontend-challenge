@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 
@@ -11,7 +11,7 @@ const NavBar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const adminOnlyLinks = (
     <ul>
       <li>
-        <Link to='/notify-subscribers'>Send Notification</Link>
+        <NavLink to='/notify-subscribers'>Send Notification</NavLink>
       </li>
       <li>
         <a onClick={logout} href='?#'>
@@ -36,10 +36,10 @@ const NavBar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to='/register'>Register</Link>
+        <NavLink to='/register'>Register</NavLink>
       </li>
       <li>
-        <Link to='/login'>Login</Link>
+        <NavLink to='/login'>Login</NavLink>
       </li>
     </ul>
   );

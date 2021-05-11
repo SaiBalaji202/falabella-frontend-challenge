@@ -1,10 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function NotifySubscribers(props) {
-  return <div>Notify Subscribers</div>;
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
+
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './NotifySubscribers.css';
+import { notifySubscribers } from '../../services/subscribersService';
+
+function NotifySubscribers({ setAlert }) {
+  const [subject, setSubject] = useState('');
+  const [bodyEditorState, setBodyEditorState] = useState(
+    EditorState.createEmpty()
+  );
+
+  const clearForm = () => {
+    setSubject('');
+    setBodyEditorState(EditorState.createEmpty());
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const htmlData = draftToHtml(
+      convertToRaw(bodyEditorState.getCurrentContent())
+    );
+
+    if (!subject?.trim() || !htmlData?.trim() || htmlData === '<p></p>') {
+      return setAlert('Invalid Data', 'danger');
+    }
+
+    await notifySubscribers(subject, htmlData);
+    clearForm();
+    setAlert('Sent Mail', 'success');
+  };
+
+  return (
+    <section className='notify-subscribers text-center'>
+      <h1 className='text-primary mg-sm'>
+        Send News Letter to your Subscribers!
+      </h1>
+      <p className='lead'>
+        <i className='far fa-envelope'></i> Notify your daily update to your
+        Subscribers!
+      </p>
+
+      <form className='form notify-form mg-sm' onSubmit={handleSubmit}>
+        <div className='form-group'>
+          <label htmlFor='subject'>Subject</label>
+          <input
+            type='text'
+            placeholder='Subject'
+            name='subject'
+            id='subject'
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <label htmlFor='boxy'>Body</label>
+          <Editor
+            editorState={bodyEditorState}
+            onEditorStateChange={setBodyEditorState}
+            toolbarClassName='editor-tool-bar'
+            editorClassName='editor-content'
+          />
+        </div>
+        <button type='submit' className='btn btn-primary'>
+          Send
+        </button>
+      </form>
+    </section>
+  );
 }
 
-NotifySubscribers.propTypes = {};
+NotifySubscribers.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
 
-export default NotifySubscribers;
+export default connect(null, { setAlert })(NotifySubscribers);

@@ -1,0 +1,14 @@
+.register-form {
+  max-width: 40rem;
+  margin: auto;
+  margin-bottom: 1rem;
+
+  border: 1px solid #ccc;
+  padding: 2rem;
+  border-radius: 4px;
+}
+
+.register-form input,
+.register-form button[type='submit'] {
+  width: 100%;
+}

@@ -1,5 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
+import setAuthToken from '../utils/setAuthToken';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -13,12 +14,16 @@ import {
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {
-    const res = await api.get('/auth');
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
 
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
+      const res = await api.get('/auth/me');
+
+      dispatch({
+        type: USER_LOADED,
+        payload: res.data,
+      });
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
@@ -29,7 +34,7 @@ export const loadUser = () => async (dispatch) => {
 // Register User
 export const register = (formData) => async (dispatch) => {
   try {
-    const res = await api.post('/users', formData);
+    const res = await api.post('/user', formData);
 
     dispatch({
       type: REGISTER_SUCCESS,

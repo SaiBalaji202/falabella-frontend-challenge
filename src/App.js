@@ -27,17 +27,19 @@ function App() {
       <Router>
         <>
           <Navbar />
-          <Alert />
-          <Switch>
-            <Route path='/login' component={Login} />
-            <Route path='/register' component={Register} />
-            <AdminRoute
-              path='/notify-subscribers'
-              component={NotifySubscribers}
-            />
-            <Route path='/' exact component={Landing} />
-            <Redirect to='/'></Redirect>
-          </Switch>
+          <section className='container'>
+            <Alert />
+            <Switch>
+              <Route path='/login' component={Login} />
+              <Route path='/register' component={Register} />
+              <AdminRoute
+                path='/notify-subscribers'
+                component={NotifySubscribers}
+              />
+              <Route path='/' exact component={Landing} />
+              <Redirect to='/'></Redirect>
+            </Switch>
+          </section>
         </>
       </Router>
     </Provider>
