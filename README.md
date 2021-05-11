@@ -1,3 +1,7 @@
+API Live URL: https://vast-mesa-50889.herokuapp.com/api
+
+UI Live URL: https://vast-mesa-50889.herokuapp.com
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
