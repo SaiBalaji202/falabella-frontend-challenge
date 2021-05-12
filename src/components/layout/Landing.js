@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
+import Spinner from '../layout/Spinner';
+
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 
@@ -12,6 +15,8 @@ function Landing({ setAlert }) {
     email: '',
   });
 
+  const [loading, setLoading] = useState(false);
+
   const clearForm = () => setFormData({ email: '', name: '' });
 
   const onChange = (e) =>
@@ -20,10 +25,17 @@ function Landing({ setAlert }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await addSubscriber(name, email);
-    setAlert('Added Subscriber!', 'success');
+    setLoading(true);
 
-    clearForm();
+    try {
+      await addSubscriber(name, email);
+      setAlert('Added Subscriber!', 'success');
+    } catch (ex) {
+      setAlert('Failed Adding Subscriber!', 'danger');
+    } finally {
+      clearForm();
+      setLoading(false);
+    }
   };
 
   const { name, email } = formData;
@@ -64,6 +76,7 @@ function Landing({ setAlert }) {
           Subscribe!
         </button>
       </form>
+      {loading && <Spinner />}
     </section>
   );
 }

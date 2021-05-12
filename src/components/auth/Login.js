@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
 
 import './Login.css';
 
-function Login({ isAuthenticated, login }) {
+function Login({ loading, isAuthenticated, login }) {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -66,6 +67,8 @@ function Login({ isAuthenticated, login }) {
       <p className='info'>
         Don't have an account? <Link to='/register'>Sign Up</Link>
       </p>
+
+      {loading && <Spinner />}
     </section>
   );
 }
@@ -73,10 +76,12 @@ function Login({ isAuthenticated, login }) {
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
 });
 
 export default connect(mapStateToProps, { login })(Login);

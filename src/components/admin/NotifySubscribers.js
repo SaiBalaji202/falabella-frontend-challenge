@@ -8,6 +8,8 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 
+import Spinner from '../layout/Spinner';
+
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './NotifySubscribers.css';
 import { notifySubscribers } from '../../services/subscribersService';
@@ -17,6 +19,7 @@ function NotifySubscribers({ setAlert }) {
   const [bodyEditorState, setBodyEditorState] = useState(
     EditorState.createEmpty()
   );
+  const [loading, setLoading] = useState(false);
 
   const clearForm = () => {
     setSubject('');
@@ -25,6 +28,8 @@ function NotifySubscribers({ setAlert }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
     const htmlData = draftToHtml(
       convertToRaw(bodyEditorState.getCurrentContent())
     );
@@ -33,9 +38,15 @@ function NotifySubscribers({ setAlert }) {
       return setAlert('Invalid Data', 'danger');
     }
 
-    await notifySubscribers(subject, htmlData);
-    clearForm();
-    setAlert('Sent Mail', 'success');
+    try {
+      await notifySubscribers(subject, htmlData);
+      setAlert('Sent Mail', 'success');
+    } catch (ex) {
+      setAlert('Mail Sent Failed', 'danger');
+    } finally {
+      clearForm();
+      setLoading(false);
+    }
   };
 
   return (
@@ -74,6 +85,8 @@ function NotifySubscribers({ setAlert }) {
           Send
         </button>
       </form>
+
+      {loading && <Spinner />}
     </section>
   );
 }

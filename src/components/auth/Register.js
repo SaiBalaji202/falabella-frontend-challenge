@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import Spinner from '../layout/Spinner';
 
 import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
@@ -8,7 +9,7 @@ import { register } from '../../actions/auth';
 
 import './Register.css';
 
-function Register({ setAlert, register, isAuthenticated }) {
+function Register({ setAlert, register, isAuthenticated, loading }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -87,6 +88,7 @@ function Register({ setAlert, register, isAuthenticated }) {
       <p className='info'>
         Already have an account? <Link to='/login'>Sign In</Link>
       </p>
+      {loading && <Spinner />}
     </section>
   );
 }
@@ -99,6 +101,7 @@ Register.propTypes = {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);

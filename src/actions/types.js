@@ -10,3 +10,6 @@ export const LOGOUT = 'LOGOUT';
 
 export const USER_LOADED = 'USER_LOADED';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const LOAD_ON = 'LOAD_ON';
+export const LOAD_OFF = 'LOAD_OFF';

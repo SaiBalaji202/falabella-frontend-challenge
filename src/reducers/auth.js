@@ -6,6 +6,8 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  LOAD_ON,
+  LOAD_OFF,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +21,16 @@ export default function authReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case LOAD_ON:
+      return {
+        ...state,
+        loading: true,
+      };
+    case LOAD_OFF:
+      return {
+        ...state,
+        loading: false,
+      };
     case USER_LOADED:
       return {
         ...state,

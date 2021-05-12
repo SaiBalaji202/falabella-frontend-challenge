@@ -9,6 +9,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  LOAD_ON,
 } from './types';
 
 // Load User
@@ -16,6 +17,8 @@ export const loadUser = () => async (dispatch) => {
   try {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
+
+      dispatch({ type: LOAD_ON });
 
       const res = await api.get('/auth/me');
 
@@ -34,6 +37,8 @@ export const loadUser = () => async (dispatch) => {
 // Register User
 export const register = (formData) => async (dispatch) => {
   try {
+    dispatch({ type: LOAD_ON });
+
     const res = await api.post('/user', formData);
 
     dispatch({
@@ -59,6 +64,7 @@ export const login = (email, password) => async (dispatch) => {
   const body = { email, password };
 
   try {
+    dispatch({ type: LOAD_ON });
     const res = await api.post('/auth', body);
 
     dispatch({
