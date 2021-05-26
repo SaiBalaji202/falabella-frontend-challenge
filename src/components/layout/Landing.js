@@ -30,10 +30,10 @@ function Landing({ setAlert }) {
     try {
       await addSubscriber(name, email);
       setAlert('Added Subscriber!', 'success');
+      clearForm();
     } catch (ex) {
       setAlert('Failed Adding Subscriber!', 'danger');
     } finally {
-      clearForm();
       setLoading(false);
     }
   };

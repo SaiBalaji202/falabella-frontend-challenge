@@ -41,10 +41,10 @@ function NotifySubscribers({ setAlert }) {
     try {
       await notifySubscribers(subject, htmlData);
       setAlert('Sent Mail', 'success');
+      clearForm();
     } catch (ex) {
       setAlert('Mail Sent Failed', 'danger');
     } finally {
-      clearForm();
       setLoading(false);
     }
   };
